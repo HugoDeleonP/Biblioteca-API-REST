@@ -62,7 +62,7 @@ public class LivroController {
         try{
             livroService.deletar(id);
             return new ResponseEntity<>("Deletado com sucesso!", HttpStatus.OK);
-        }catch (SQLException e){
+        }catch (SQLException | RuntimeException e){
             throw new RuntimeException(e.getMessage());
         }
     }

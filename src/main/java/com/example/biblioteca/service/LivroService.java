@@ -40,6 +40,10 @@ public class LivroService {
 
     public void deletar(Long id) throws SQLException{
 
+        if(livroRepository.verificaLivroAtribuidoEmprestimo(id)){
+            throw new RuntimeException("Não é possível deletar livro atribuido a um empréstimo");
+        }
+
         livroRepository.deletar(id);
 
 

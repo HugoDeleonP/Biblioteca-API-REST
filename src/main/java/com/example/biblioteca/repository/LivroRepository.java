@@ -134,4 +134,28 @@ public class LivroRepository {
             stmt.executeUpdate();
         }
     }
+
+    public boolean verificaLivroAtribuidoEmprestimo(Long id) throws SQLException{
+        String sql = """
+                
+                SELECT COUNT(id) as quantidade
+                FROM livro
+                WHERE id = ?;
+                
+                """;
+
+        try(Connection conn = DatabaseConnect.connect()){
+            PreparedStatement stmt = conn.prepareStatement(sql);
+
+            stmt.setLong(1, id);
+
+            ResultSet rs = stmt.executeQuery();
+
+            if(rs.next()){
+                return rs.getInt("quantidade") > 1;
+            }
+        }
+
+        return false;
+    }
 }
