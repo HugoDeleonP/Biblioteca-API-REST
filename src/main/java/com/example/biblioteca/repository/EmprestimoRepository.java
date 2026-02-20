@@ -59,8 +59,8 @@ public class EmprestimoRepository {
                 Long id = rs.getLong("id");
                 Long livro_id = rs.getLong("livro_id");
                 Long usuario_id = rs.getLong("usuario_id");
-                LocalDate data_emprestimo = rs.getDate("data_emprestimo").toLocalDate();
-                LocalDate data_devolucao = rs.getDate("data_devolucao").toLocalDate();
+                LocalDate data_emprestimo = rs.getObject("data_emprestimo", LocalDate.class);
+                LocalDate data_devolucao = rs.getObject("data_devolucao", LocalDate.class);
 
                 emprestimos.add(new Emprestimo(id, livro_id, usuario_id, data_emprestimo, data_devolucao));
             }
@@ -85,8 +85,8 @@ public class EmprestimoRepository {
             if(rs.next()){
                 Long livro_id = rs.getLong("livro_id");
                 Long usuario_id = rs.getLong("usuario_id");
-                LocalDate data_emprestimo = rs.getDate("data_emprestimo").toLocalDate();
-                LocalDate data_devolucao = rs.getDate("data_devolucao").toLocalDate();
+                LocalDate data_emprestimo = rs.getObject("data_emprestimo", LocalDate.class);
+                LocalDate data_devolucao = rs.getObject("data_devolucao", LocalDate.class);
 
                 return new Emprestimo(id, livro_id, usuario_id, data_emprestimo, data_devolucao);
             }
