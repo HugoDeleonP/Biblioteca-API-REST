@@ -24,10 +24,25 @@ public class Emprestimo {
         this.data_emprestimo = data_emprestimo;
     }
 
+    public Emprestimo(LocalDate data_devolucao) {
+        this.data_devolucao = data_devolucao;
+    }
+
+    public Emprestimo(Long livro_id, LocalDate data_devolucao, Long usuario_id) {
+        this.livro_id = livro_id;
+        this.usuario_id = usuario_id;
+        this.data_devolucao = data_devolucao;
+    }
+
     public Emprestimo(){}
 
-
-
+    public Emprestimo(Long id, Long livro_id, Long usuario_id, LocalDate data_emprestimo, LocalDate data_devolucao) {
+        this.id = id;
+        this.livro_id = livro_id;
+        this.usuario_id = usuario_id;
+        this.data_emprestimo = data_emprestimo;
+        this.data_devolucao = data_devolucao;
+    }
 
     public Long getId() {
         return id;

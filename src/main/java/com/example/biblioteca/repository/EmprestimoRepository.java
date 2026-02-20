@@ -2,7 +2,6 @@ package com.example.biblioteca.repository;
 
 import com.example.biblioteca.infra.DatabaseConnect;
 import com.example.biblioteca.model.Emprestimo;
-import com.example.biblioteca.model.Usuario;
 import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Repository;
 
@@ -45,7 +44,7 @@ public class EmprestimoRepository {
 
     public List<Emprestimo> buscarTodos() throws SQLException {
         String sql = """
-                SELECT id, livro_id, usuario_id, data_emprestimo
+                SELECT id, livro_id, usuario_id, data_emprestimo, data_devolucao
                 FROM emprestimo
         """;
 
@@ -61,8 +60,9 @@ public class EmprestimoRepository {
                 Long livro_id = rs.getLong("livro_id");
                 Long usuario_id = rs.getLong("usuario_id");
                 LocalDate data_emprestimo = rs.getDate("data_emprestimo").toLocalDate();
+                LocalDate data_devolucao = rs.getDate("data_devolucao").toLocalDate();
 
-                emprestimos.add(new Emprestimo(id, livro_id, usuario_id, data_emprestimo));
+                emprestimos.add(new Emprestimo(id, livro_id, usuario_id, data_emprestimo, data_devolucao));
             }
 
             return emprestimos;
@@ -71,7 +71,7 @@ public class EmprestimoRepository {
 
     public Emprestimo buscarPorId(Long id) throws SQLException{
         String sql = """
-                SELECT id, livro_id, usuario_id, data_emprestimo
+                SELECT id, livro_id, usuario_id, data_emprestimo, data_devolucao
                 FROM emprestimo
                 WHERE id = ?
         """;
@@ -86,8 +86,9 @@ public class EmprestimoRepository {
                 Long livro_id = rs.getLong("livro_id");
                 Long usuario_id = rs.getLong("usuario_id");
                 LocalDate data_emprestimo = rs.getDate("data_emprestimo").toLocalDate();
+                LocalDate data_devolucao = rs.getDate("data_devolucao").toLocalDate();
 
-                return new Emprestimo(id, livro_id, usuario_id, data_emprestimo);
+                return new Emprestimo(id, livro_id, usuario_id, data_emprestimo, data_devolucao);
             }
 
             return null;

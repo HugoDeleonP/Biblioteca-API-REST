@@ -47,7 +47,7 @@ public class EmprestimoController {
     }
 
     @PutMapping("/{id}")
-    public Emprestimo atualizarDataEmprestimo(@PathVariable Long id, Emprestimo emprestimo){
+    public Emprestimo atualizarDataEmprestimo(@PathVariable Long id, @RequestBody Emprestimo emprestimo){
         try{
             return emprestimoService.atualizarDataEmprestimo(id, emprestimo);
         } catch (SQLException e){
@@ -56,7 +56,7 @@ public class EmprestimoController {
     }
 
     @PutMapping("/{id}/devolucao")
-    public Emprestimo atualizarDataDevolucao(@PathVariable Long id, Emprestimo emprestimo){
+    public Emprestimo atualizarDataDevolucao(@PathVariable Long id, @RequestBody Emprestimo emprestimo){
         try{
             return emprestimoService.atualizarDataDevolucao(id, emprestimo);
         } catch (SQLException e){
