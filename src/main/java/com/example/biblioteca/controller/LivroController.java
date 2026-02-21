@@ -1,5 +1,7 @@
 package com.example.biblioteca.controller;
 
+import com.example.biblioteca.dto.LivroRequisicaoDTO;
+import com.example.biblioteca.dto.LivroRespostaDTO;
 import com.example.biblioteca.model.Livro;
 import com.example.biblioteca.service.LivroService;
 import org.springframework.http.HttpStatus;
@@ -20,9 +22,9 @@ public class LivroController {
     }
 
     @PostMapping
-    public Livro salvar(@RequestBody Livro livro){
+    public LivroRespostaDTO salvar(@RequestBody LivroRequisicaoDTO requisicaoDTO){
         try{
-            return livroService.salvar(livro);
+            return livroService.salvar(requisicaoDTO);
         } catch (SQLException e){
             throw new RuntimeException("Erro");
         }
@@ -30,17 +32,16 @@ public class LivroController {
     }
 
     @GetMapping
-    public List<Livro> buscarTodos(){
+    public List<LivroRespostaDTO> buscarTodos(){
         try {
             return livroService.buscarTodos();
         }catch (SQLException e){
             throw new RuntimeException(e.getMessage());
-
         }
     }
 
     @GetMapping("/{id}")
-    public Livro buscarPorId(@PathVariable Long id){
+    public LivroRespostaDTO buscarPorId(@PathVariable Long id){
         try {
             return livroService.buscarPorId(id);
         }catch (SQLException e){
@@ -49,7 +50,7 @@ public class LivroController {
     }
 
     @PutMapping("/{id}")
-    public Livro atualizar(@RequestBody Livro livro, @PathVariable Long id){
+    public LivroRespostaDTO atualizar(@RequestBody Livro livro, @PathVariable Long id){
         try {
             return livroService.atualizar(livro, id);
         }catch (SQLException e){

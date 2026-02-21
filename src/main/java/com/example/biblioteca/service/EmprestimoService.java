@@ -1,5 +1,7 @@
 package com.example.biblioteca.service;
 
+import com.example.biblioteca.dto.EmprestimoRequisicaoDTO;
+import com.example.biblioteca.mapper.EmprestimoMapper;
 import com.example.biblioteca.model.Emprestimo;
 import com.example.biblioteca.model.Livro;
 import com.example.biblioteca.model.Usuario;
@@ -17,17 +19,19 @@ public class EmprestimoService {
     private final EmprestimoRepository emprestimoRepository;
     private final UsuarioRepository usuarioRepository;
     private final LivroRepository livroRepository;
-    public EmprestimoService(EmprestimoRepository emprestimoRepository, UsuarioRepository usuarioRepository, LivroRepository livroRepository){
+
+    private final EmprestimoMapper emprestimoMapper;
+    public EmprestimoService(EmprestimoRepository emprestimoRepository, UsuarioRepository usuarioRepository, LivroRepository livroRepository, EmprestimoMapper emprestimoMapper){
         this.emprestimoRepository = emprestimoRepository;
         this.usuarioRepository = usuarioRepository;
         this.livroRepository = livroRepository;
+        this.emprestimoMapper = emprestimoMapper;
     }
 
-    public Emprestimo salvar(Emprestimo emprestimo) throws SQLException {
-        Usuario usuario = usuarioRepository.buscarPorId(emprestimo.getUsuario_id());
-        Livro livro = livroRepository.buscarPorId(emprestimo.getUsuario_id());
+    public EmprestimoRequisicaoDTO salvar(EmprestimoRequisicaoDTO emprestimoRequisicaoDTO) throws SQLException {
 
-        return emprestimoRepository.salvar(emprestimo);
+
+        return emprestimoRepository.salvar();
     }
 
     public List<Emprestimo> buscarTodos() throws SQLException {

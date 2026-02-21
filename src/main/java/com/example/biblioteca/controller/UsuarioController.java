@@ -1,5 +1,7 @@
 package com.example.biblioteca.controller;
 
+import com.example.biblioteca.dto.UsuarioRequisicaoDTO;
+import com.example.biblioteca.dto.UsuarioRespostaDTO;
 import com.example.biblioteca.model.Usuario;
 import com.example.biblioteca.service.UsuarioService;
 import org.springframework.http.HttpStatus;
@@ -20,16 +22,16 @@ public class UsuarioController {
     }
 
     @PostMapping
-    public Usuario salvar(@RequestBody Usuario usuario){
+    public UsuarioRespostaDTO salvar(@RequestBody UsuarioRequisicaoDTO usuarioRequisicaoDTO){
         try{
-            return usuarioService.salvar(usuario);
+            return usuarioService.salvar(usuarioRequisicaoDTO);
         }catch (SQLException e){
             throw new RuntimeException(e.getMessage());
         }
     }
 
     @GetMapping
-    public List<Usuario> buscarTodos(){
+    public List<UsuarioRespostaDTO> buscarTodos(){
         try{
             return usuarioService.buscarTodos();
         }catch (SQLException e){
@@ -38,7 +40,7 @@ public class UsuarioController {
     }
 
     @GetMapping("/{id}")
-    public Usuario buscarTodos(@PathVariable Long id){
+    public UsuarioRespostaDTO buscarTodos(@PathVariable Long id){
         try{
             return usuarioService.buscarPorId(id);
         }catch (SQLException e){
@@ -47,7 +49,7 @@ public class UsuarioController {
     }
 
     @PutMapping("/{id}")
-    public Usuario atualizar(@RequestBody Usuario usuario, @PathVariable Long id){
+    public UsuarioRespostaDTO atualizar(@RequestBody Usuario usuario, @PathVariable Long id){
         try{
             return usuarioService.atualizar(usuario, id);
         }catch (SQLException e){

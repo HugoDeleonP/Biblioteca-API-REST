@@ -1,41 +1,70 @@
 package com.example.biblioteca.service;
 
+import com.example.biblioteca.dto.LivroRequisicaoDTO;
+import com.example.biblioteca.dto.LivroRespostaDTO;
+import com.example.biblioteca.mapper.LivroMapper;
 import com.example.biblioteca.model.Livro;
 import com.example.biblioteca.repository.LivroRepository;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class LivroService {
 
     private final LivroRepository livroRepository;
+    private final LivroMapper livroMapper;
 
-    public LivroService(LivroRepository livroRepository){
+    public LivroService(LivroRepository livroRepository, LivroMapper livroMapper){
         this.livroRepository = livroRepository;
+        this.livroMapper = livroMapper;
     }
 
-    public Livro salvar(Livro livro) throws SQLException {
+    public LivroRespostaDTO salvar(LivroRequisicaoDTO requisicaoDTO) throws SQLException {
 
-        return livroRepository.salvar(livro);
+        Livro livro = livroMapper.paraEntidade(requisicaoDTO);
+
+        Livro livroBancoDados = livroRepository.salvar(livro);
+
+        return livroMapper.paraRespostaDto(livroBancoDados);
     }
 
-    public List<Livro> buscarTodos() throws SQLException{
+    public List<LivroRespostaDTO> buscarTodos() throws SQLException{
 
-        return livroRepository.buscarTodos();
+        List<Livro> livros = livroRepository.buscarTodos();
+
+        /*
+
+        List<LivroRespostaDTO> respostasDTO = new ArrayList<>();
+
+        livros.forEach( livro -> {
+            respostasDTO.add(livroMapper.paraRespostaDto(livro));
+        });
+
+        */
+
+        return livros.stream()
+                .map( livro -> livroMapper.paraRespostaDto(livro))
+                .collect(Collectors.toList());
     }
 
-    public Livro buscarPorId(Long id) throws SQLException{
+    public LivroRespostaDTO buscarPorId(Long id) throws SQLException{
 
-        return livroRepository.buscarPorId(id);
+        Livro livro = livroRepository.buscarPorId(id);
+
+        return livroMapper.paraRespostaDto(livro);
     }
 
-    public Livro atualizar(Livro livro, Long id) throws SQLException{
+    public LivroRespostaDTO atualizar(Livro livro, Long id) throws SQLException{
 
         livro.setId(id);
 
-        return livroRepository.atualizar(livro);
+        Livro livroAtualizado = livroRepository.atualizar(livro);
+
+        return livroMapper.paraRespostaDto(livroAtualizado);
     }
 
     public void deletar(Long id) throws SQLException{
@@ -45,6 +74,7 @@ public class LivroService {
         }
 
         livroRepository.deletar(id);
+
 
 
     }
