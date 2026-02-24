@@ -1,6 +1,7 @@
 package com.example.biblioteca.service;
 
 import com.example.biblioteca.dto.EmprestimoRequisicaoDTO;
+import com.example.biblioteca.dto.EmprestimoRespostaDTO;
 import com.example.biblioteca.mapper.EmprestimoMapper;
 import com.example.biblioteca.model.Emprestimo;
 import com.example.biblioteca.model.Livro;
@@ -11,7 +12,9 @@ import com.example.biblioteca.repository.UsuarioRepository;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class EmprestimoService {
@@ -28,32 +31,41 @@ public class EmprestimoService {
         this.emprestimoMapper = emprestimoMapper;
     }
 
-    public EmprestimoRequisicaoDTO salvar(EmprestimoRequisicaoDTO emprestimoRequisicaoDTO) throws SQLException {
+    public EmprestimoRespostaDTO salvar(EmprestimoRequisicaoDTO emprestimoRequisicaoDTO) throws SQLException {
 
+        Emprestimo emprestimo = emprestimoMapper.paraEntidade(emprestimoRequisicaoDTO);
 
-        return emprestimoRepository.salvar();
+        return emprestimoMapper.paraRespostaDto(emprestimoRepository.salvar(emprestimo));
     }
 
-    public List<Emprestimo> buscarTodos() throws SQLException {
-        return emprestimoRepository.buscarTodos();
+    public List<EmprestimoRespostaDTO> buscarTodos() throws SQLException {
+
+        List<Emprestimo> emprestimos = emprestimoRepository.buscarTodos();
+
+        return emprestimos
+                .stream().map(
+                        emprestimo -> emprestimoMapper.paraRespostaDto(emprestimo)
+                )
+                .collect(Collectors.toList());
 
     }
 
-    public Emprestimo buscarPorId(Long id) throws SQLException{
-        return emprestimoRepository.buscarPorId(id);
+    public EmprestimoRespostaDTO buscarPorId(Long id) throws SQLException{
+
+        return emprestimoMapper.paraRespostaDto(emprestimoRepository.buscarPorId(id));
 
     }
 
-    public Emprestimo atualizarDataEmprestimo(Long id, Emprestimo emprestimo) throws SQLException{
+    public EmprestimoRespostaDTO atualizarDataEmprestimo(Long id, Emprestimo emprestimo) throws SQLException{
         emprestimo.setId(id);
 
-        return emprestimoRepository.atualizarDataEmprestimo(emprestimo);
+        return emprestimoMapper.paraRespostaDto(emprestimoRepository.atualizarDataEmprestimo(emprestimo));
     }
 
-    public Emprestimo atualizarDataDevolucao(Long id, Emprestimo emprestimo) throws SQLException{
+    public EmprestimoRespostaDTO atualizarDataDevolucao(Long id, Emprestimo emprestimo) throws SQLException{
         emprestimo.setId(id);
 
-        return emprestimoRepository.atualizarDataDevolucao(emprestimo);
+        return emprestimoMapper.paraRespostaDto(emprestimoRepository.atualizarDataDevolucao(emprestimo));
     }
 
     public void deletar(Long id) throws SQLException{

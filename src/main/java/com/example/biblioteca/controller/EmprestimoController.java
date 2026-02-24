@@ -31,7 +31,7 @@ public class EmprestimoController {
     }
 
     @GetMapping
-    public List<Emprestimo> buscarTodos(){
+    public List<EmprestimoRespostaDTO> buscarTodos(){
         try{
             return emprestimoService.buscarTodos();
         } catch (SQLException e){
@@ -40,7 +40,7 @@ public class EmprestimoController {
     }
 
     @GetMapping("/{id}")
-    public Emprestimo buscarPorId(@PathVariable Long id){
+    public EmprestimoRespostaDTO buscarPorId(@PathVariable Long id){
         try{
             return emprestimoService.buscarPorId(id);
         } catch (SQLException e){
@@ -49,7 +49,7 @@ public class EmprestimoController {
     }
 
     @PutMapping("/{id}")
-    public Emprestimo atualizarDataEmprestimo(@PathVariable Long id, @RequestBody Emprestimo emprestimo){
+    public EmprestimoRespostaDTO atualizarDataEmprestimo(@PathVariable Long id, @RequestBody Emprestimo emprestimo){
         try{
             return emprestimoService.atualizarDataEmprestimo(id, emprestimo);
         } catch (SQLException e){
@@ -58,7 +58,7 @@ public class EmprestimoController {
     }
 
     @PutMapping("/{id}/devolucao")
-    public Emprestimo atualizarDataDevolucao(@PathVariable Long id, @RequestBody Emprestimo emprestimo){
+    public EmprestimoRespostaDTO atualizarDataDevolucao(@PathVariable Long id, @RequestBody Emprestimo emprestimo){
         try{
             return emprestimoService.atualizarDataDevolucao(id, emprestimo);
         } catch (SQLException e){
