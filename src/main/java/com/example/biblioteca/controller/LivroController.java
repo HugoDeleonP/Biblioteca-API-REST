@@ -32,11 +32,13 @@ public class LivroController {
     }
 
     @GetMapping
-    public List<LivroRespostaDTO> buscarTodos(){
+    public ResponseEntity<String> buscarTodos(){
         try {
-            return livroService.buscarTodos();
+             livroService.buscarTodos();
+
+             return new ResponseEntity<>("Livros encontrados com sucesso!", HttpStatus.OK);
         }catch (SQLException e){
-            throw new RuntimeException(e.getMessage());
+            return new ResponseEntity<>("Livros não encontrados", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
