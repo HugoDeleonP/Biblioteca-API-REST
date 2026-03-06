@@ -81,7 +81,7 @@
 					<archive>
 						<manifest>
 							<addClasspath>true</addClasspath>
-							<mainClass>com.yourpackage.YourMainClass</mainClass>
+							<mainClass>com.example.biblioteca.BibliotecaApplication</mainClass>
 						</manifest>
 					</archive>
 				</configuration>
@@ -90,7 +90,7 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
-					<mainClass>com.example.biblioteca</mainClass>
+					<mainClass>com.example.biblioteca.BibliotecaApplication</mainClass>
 				</configuration>
 			</plugin>
 
